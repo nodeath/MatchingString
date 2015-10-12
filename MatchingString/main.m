@@ -7,11 +7,36 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NSString+Matching.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        // insert code here...
-        NSLog(@"Hello, World!");
+        NSString *text = @"bacbababaabcbab";
+        NSString *pattern = @"ababaca";
+        NSInteger repeatTime = 100000;
+        
+        NSLog(@"Buildin:");
+        NSDate *start = [NSDate date];
+        for(NSInteger i=0; i<repeatTime; i++){
+            [text containsString:pattern];
+        }
+        NSLog(@"excute time:%f", [[NSDate date] timeIntervalSinceDate:start]);
+        
+        NSLog(@"KMP:");
+        start = [NSDate date];
+        for(NSInteger i=0; i<repeatTime; i++){
+            [text kmp_containsString:pattern];
+        }
+        
+        NSLog(@"excute time:%f", [[NSDate date] timeIntervalSinceDate:start]);
+        
+        NSLog(@"Regex:");
+        start = [NSDate date];
+        for(NSInteger i=0; i<repeatTime; i++){
+            [text regex_containsString:pattern];
+        }
+        
+        NSLog(@"excute time:%f", [[NSDate date] timeIntervalSinceDate:start]);
     }
     return 0;
 }
